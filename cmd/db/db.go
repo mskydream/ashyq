@@ -3,13 +3,12 @@ package db
 import (
 	"fmt"
 
-	"github.com/mskydream/qr-code/src/config"
-
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/jmoiron/sqlx"
+	"github.com/mskydream/qr-code/cmd/config"
 )
 
 type DB struct {
@@ -24,7 +23,7 @@ func (d *DB) InitDatabase(c *config.DB) *DB {
 		panic(err)
 	}
 
-	m, err := migrate.New("file://migrations", source)
+	m, err := migrate.New("file://cmd/migrations", source)
 	if err != nil {
 		panic(err)
 	}
