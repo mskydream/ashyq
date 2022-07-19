@@ -10,6 +10,11 @@ type Authorization interface {
 	GetUser(iin, password string) (model.User, error)
 }
 
+type RealEstate interface {
+	//Create(model model.RealEstate) (int error)
+	GetRealEstate(id int) (model.RealEstate, error)
+}
+
 type Repository struct {
 	db *db.DB
 }

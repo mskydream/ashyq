@@ -23,5 +23,11 @@ func (h *Handler) SetupRouter() *gin.Engine {
 		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
 	}
+
+	api := router.Group("/api")
+	{
+		api.GET("/real-estate/:id", h.getAllRealEstate)
+	}
+
 	return router
 }
