@@ -11,8 +11,11 @@ type Authorization interface {
 }
 
 type RealEstate interface {
-	//Create(model model.RealEstate) (int error)
-	GetRealEstate(id int) (model.RealEstate, error)
+	Create(userId int, realEstate *model.RealEstate) (int, error)
+	GetAll(userId int) ([]model.RealEstate, error)
+	Get(userId int, id string) (model.RealEstate, error)
+	// Update(userId int, id int, realEstate *model.RealEstate) error
+	// Delete(userId int, id int) error
 }
 
 type Repository struct {

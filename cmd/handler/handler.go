@@ -24,9 +24,16 @@ func (h *Handler) SetupRouter() *gin.Engine {
 		auth.POST("/sign-in", h.signIn)
 	}
 
-	api := router.Group("/api")
+	api := router.Group("/api", h.userIdentity)
 	{
-		api.GET("/real-estate/:id", h.getAllRealEstate)
+		realEstate := api.Group("/real-estate")
+		{
+			realEstate.GET("/", h.getAllRealEstates)
+			realEstate.GET("/:id", h.getRealEstate)
+			realEstate.POST("/", h.createRealEstate)
+			// realEstate.PUT("/:id", h.updateRealEstate)
+			// realEstate.DELETE("/:id", h.deleteRealEstate)
+		}
 	}
 
 	return router
