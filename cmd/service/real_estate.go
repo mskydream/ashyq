@@ -15,14 +15,3 @@ func (s *Service) GetAll(userId int) ([]model.RealEstate, error) {
 func (s *Service) Get(userId int, id string) (model.RealEstate, error) {
 	return s.repo.Get(userId, id)
 }
-
-// func (s *Service) generateQrCode(address string) (string, error) {
-// 	nameQrCode := time.Now().Unix()
-// 	// nameQrCode to string
-// 	nameQrCodeStr := strconv.FormatInt(nameQrCode, 10) + ".png"
-// 	err := qrcode.WriteFile("http://localhost:8080/qr-code/"+address+".png", qrcode.Medium, 256, nameQrCodeStr) // create a QR code image
-// 	if err != nil {
-// 		return "", err
-// 	}
-// 	return address, nil
-// }
