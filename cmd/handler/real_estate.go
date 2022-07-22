@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,12 @@ func (h *Handler) createRealEstate(c *gin.Context) {
 	if err := c.ShouldBindJSON(&realEstate); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, model.Response{IsSuccess: false, Message: "Введенные данные некорректны", Data: err})
 		return
+	}
+
+	fmt.Println(realEstate.Address)
+
+	if err := h.service.CheckAddress(realEstate.Address); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, model.Response{IsSuccess: false, Message: "Адрес уже добавлен", Data: ""})
 	}
 
 	id, err := h.service.Create(userId, &realEstate)

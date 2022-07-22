@@ -28,12 +28,16 @@ CREATE TABLE IF NOT EXISTS visit(
     created_at              TIMESTAMP               NOT NULL
 );
 
-ALTER TABLE user_profile    OWNER TO study;
-ALTER TABLE real_estate     OWNER TO study;
-ALTER TABLE visit           OWNER TO study;
+ALTER TABLE user_profile    OWNER TO postgres;
+ALTER TABLE real_estate     OWNER TO postgres;
+ALTER TABLE visit           OWNER TO postgres;
 COMMIT;
 
 
+
+-- ALTER TABLE user_profile    OWNER TO study;
+-- ALTER TABLE real_estate     OWNER TO study;
+-- ALTER TABLE visit           OWNER TO study;
 -- INSERT INTO user_profile(username,surname,born, status,phone_number,iin,gender,residential_address,password,created_at)
 -- VALUES 
 -- ('Aidyn','Omarov','2000-11-29 22:00:44','green',87474224540,001129500582,'Male','per, Lokomotiv 25','Aidyn','2022-07-07 22:00:44'),

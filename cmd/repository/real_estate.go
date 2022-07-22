@@ -49,3 +49,7 @@ func (r *Repository) Get(userId int, id string) (realEstate model.RealEstate, er
 func WriteQRCodeToFile(pathFileName, data string) error {
 	return qrcode.WriteFile(data, qrcode.Medium, 256, pathFileName)
 }
+
+func (r *Repository) CheckAddress(address string) error {
+	return r.db.Conn.Select("SELECT * FROM real_estate WHERE address = $1", address)
+}

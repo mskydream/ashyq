@@ -15,3 +15,7 @@ func (s *Service) GetAll(userId int) ([]model.RealEstate, error) {
 func (s *Service) Get(userId int, id string) (model.RealEstate, error) {
 	return s.repo.Get(userId, id)
 }
+
+func (s *Service) CheckAddress(address string) error {
+	return s.repo.CheckAddress(address)
+}

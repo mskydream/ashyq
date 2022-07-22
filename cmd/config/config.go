@@ -17,7 +17,7 @@ type DB struct {
 }
 
 func LoadConfig() (config Configuration, err error) {
-	viper.SetConfigName("dev")
+	viper.SetConfigName("prod")
 	viper.SetConfigType("env")
 	viper.AddConfigPath("./")
 	viper.AutomaticEnv()
