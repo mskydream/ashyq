@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/mskydream/qr-code/cmd/db"
-	"github.com/mskydream/qr-code/cmd/model"
+	"github.com/mskydream/ashyq/cmd/db"
+	"github.com/mskydream/ashyq/cmd/model"
 )
 
 type Authorization interface {

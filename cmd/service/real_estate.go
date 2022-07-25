@@ -1,8 +1,6 @@
 package service
 
-import (
-	"github.com/mskydream/qr-code/cmd/model"
-)
+import "github.com/mskydream/ashyq/cmd/model"
 
 func (s *Service) Create(userId int, realEstate *model.RealEstate) (int, error) {
 	return s.repo.Create(userId, realEstate)

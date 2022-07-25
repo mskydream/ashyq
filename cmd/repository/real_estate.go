@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/mskydream/qr-code/cmd/model"
+	"github.com/mskydream/ashyq/cmd/model"
 	"github.com/skip2/go-qrcode"
 )
 

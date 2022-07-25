@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/mskydream/qr-code/cmd/config"
-	"github.com/mskydream/qr-code/cmd/db"
-	"github.com/mskydream/qr-code/cmd/handler"
-	"github.com/mskydream/qr-code/cmd/repository"
-	"github.com/mskydream/qr-code/cmd/service"
+	"github.com/mskydream/ashyq/cmd/config"
+	"github.com/mskydream/ashyq/cmd/db"
+	"github.com/mskydream/ashyq/cmd/handler"
+	"github.com/mskydream/ashyq/cmd/repository"
+	"github.com/mskydream/ashyq/cmd/service"
 )
 
 func main() {

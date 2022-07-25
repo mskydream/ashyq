@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mskydream/qr-code/cmd/service"
+	"github.com/mskydream/ashyq/cmd/service"
 )
 
 type Handler struct {

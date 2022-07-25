@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mskydream/qr-code/cmd/model"
+	"github.com/mskydream/ashyq/cmd/model"
 )
 
 func (h *Handler) createRealEstate(c *gin.Context) {

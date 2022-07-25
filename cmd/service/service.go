@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/mskydream/qr-code/cmd/model"
-	"github.com/mskydream/qr-code/cmd/repository"
+	"github.com/mskydream/ashyq/cmd/model"
+	"github.com/mskydream/ashyq/cmd/repository"
 )
 
 type Authorization interface {

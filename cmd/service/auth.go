@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/mskydream/qr-code/cmd/model"
+	"github.com/mskydream/ashyq/cmd/model"
 )
 
 const (

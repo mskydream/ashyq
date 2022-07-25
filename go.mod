@@ -1,4 +1,4 @@
-module github.com/mskydream/qr-code
+module github.com/mskydream/ashyq
 
 go 1.18
 
