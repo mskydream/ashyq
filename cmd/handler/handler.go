@@ -39,6 +39,13 @@ func (h *Handler) SetupRouter() *gin.Engine {
 			realEstate.StaticFS("/qr-code", http.Dir("./cmd/qr"))
 		}
 
+		visit := api.Group("/visit")
+		{
+			visit.POST("/", h.createVisit)
+			visit.GET("/:id", h.getVisit)
+			visit.GET("/", h.getAllVisits)
+		}
+
 	}
 
 	return router

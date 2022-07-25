@@ -23,18 +23,18 @@ type User struct {
 }
 
 type RealEstate struct {
-	Id            int    `db:"id" json:"id"`
-	UserProfileId int    `db:"user_profile_id" json:"user_profile_id"`
-	Address       string `db:"address" json:"address"`
-	QrCode        string `db:"qr_code" json:"qr_code"`
-	CreatedAt     string `db:"created_at" json:"created_at"`
+	Id            uint      `db:"id" json:"id"`
+	UserProfileId uint      `db:"user_profile_id" json:"user_profile_id"`
+	Address       string    `db:"address" json:"address"`
+	QrCode        string    `db:"qr_code" json:"qr_code"`
+	CreatedAt     time.Time `db:"created_at" json:"created_at"`
 }
 
 type Visit struct {
-	Id            int    `db:"id" json:"id"`
-	RealEstateId  int    `db:"real_estate_id" json:"real_estate_id"`
-	UserProfileId int    `db:"user_profile_id" json:"user_profile_id"`
-	CreatedAt     string `db:"created_at" json:"created_at"`
+	Id            int       `db:"id" json:"id"`
+	RealEstateId  string    `db:"real_estate_id" json:"real_estate_id"`
+	UserProfileId string    `db:"user_profile_id" json:"user_profile_id"`
+	CreatedAt     time.Time `db:"created_at" json:"created_at"`
 }
 
 type SignInInput struct {

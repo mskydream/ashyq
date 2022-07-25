@@ -19,6 +19,11 @@ type RealEstate interface {
 	Update(userId int, id string, realEstate *model.RealEstate) error
 	Delete(userId int, id string) error
 }
+type Visit interface {
+	CreateVisit(userId int, visit *model.Visit) (int, error)
+	GetVisits(userId int) ([]model.Visit, error)
+	GetVisit(userId int, id string) (model.Visit, error)
+}
 
 type Service struct {
 	repo *repository.Repository
