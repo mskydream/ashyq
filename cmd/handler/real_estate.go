@@ -31,7 +31,7 @@ func (h *Handler) createRealEstate(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"id": id})
+	c.JSON(http.StatusCreated, model.Response{IsSuccess: true, Message: "Объект создан", Data: id})
 }
 
 func (h *Handler) getAllRealEstates(c *gin.Context) {
@@ -47,7 +47,7 @@ func (h *Handler) getAllRealEstates(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, realEstates)
+	c.JSON(http.StatusOK, model.Response{IsSuccess: true, Message: "Объекты получены", Data: realEstates})
 }
 
 func (h *Handler) getRealEstate(c *gin.Context) {
@@ -64,7 +64,7 @@ func (h *Handler) getRealEstate(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, realEstate)
+	c.JSON(http.StatusOK, model.Response{IsSuccess: true, Message: "Объект получен", Data: realEstate})
 }
 
 func (h *Handler) deleteRealEstate(c *gin.Context) {
@@ -81,7 +81,7 @@ func (h *Handler) deleteRealEstate(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"id": id})
+	c.JSON(http.StatusOK, model.Response{IsSuccess: true, Message: "Объект удален", Data: "deleted"})
 }
 
 func (h *Handler) updateRealEstate(c *gin.Context) {
@@ -104,5 +104,5 @@ func (h *Handler) updateRealEstate(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"id": id})
+	c.JSON(http.StatusOK, model.Response{IsSuccess: true, Message: "Объект обновлен", Data: "sucess"})
 }
