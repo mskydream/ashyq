@@ -1,7 +1,7 @@
 BEGIN;
 CREATE TABLE IF NOT EXISTS user_profile(
     id                      serial                                              PRIMARY KEY,
-    name                VARCHAR(255)                                        NOT NULL,
+    name                    VARCHAR(255)                                        NOT NULL,
     surname                 VARCHAR(255)                                        NOT NULL,
     born                    TIMESTAMP                                           NOT NULL,
     status                  TEXT CHECK(status IN ('green','red', 'yellow'))     NOT NULL,
@@ -28,16 +28,18 @@ CREATE TABLE IF NOT EXISTS visit(
     created_at              TIMESTAMP               NOT NULL
 );
 
-ALTER TABLE user_profile    OWNER TO postgres;
-ALTER TABLE real_estate     OWNER TO postgres;
-ALTER TABLE visit           OWNER TO postgres;
+-- ALTER TABLE user_profile    OWNER TO postgres;
+-- ALTER TABLE real_estate     OWNER TO postgres;
+-- ALTER TABLE visit           OWNER TO postgres;
+-- COMMIT;
+
+
+
+ALTER TABLE user_profile    OWNER TO study;
+ALTER TABLE real_estate     OWNER TO study;
+ALTER TABLE visit           OWNER TO study;
 COMMIT;
 
-
-
--- ALTER TABLE user_profile    OWNER TO study;
--- ALTER TABLE real_estate     OWNER TO study;
--- ALTER TABLE visit           OWNER TO study;
 -- INSERT INTO user_profile(username,surname,born, status,phone_number,iin,gender,residential_address,password,created_at)
 -- VALUES 
 -- ('Aidyn','Omarov','2000-11-29 22:00:44','green',87474224540,001129500582,'Male','per, Lokomotiv 25','Aidyn','2022-07-07 22:00:44'),

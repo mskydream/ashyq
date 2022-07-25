@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/mskydream/ashyq/cmd/service"
 )
@@ -18,6 +20,7 @@ func NewHandler(service *service.Service) *Handler {
 func (h *Handler) SetupRouter() *gin.Engine {
 	router := gin.Default()
 
+	// router.StaticFS("/qr-code", http.Dir("./cmd/qr"))
 	auth := router.Group("/auth")
 	{
 		auth.POST("/sign-up", h.signUp)
@@ -33,7 +36,9 @@ func (h *Handler) SetupRouter() *gin.Engine {
 			realEstate.POST("/", h.createRealEstate)
 			// realEstate.PUT("/:id", h.updateRealEstate)
 			// realEstate.DELETE("/:id", h.deleteRealEstate)
+			realEstate.StaticFS("/qr-code", http.Dir("./cmd/qr"))
 		}
+
 	}
 
 	return router

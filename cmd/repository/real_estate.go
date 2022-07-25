@@ -1,12 +1,27 @@
 package repository
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/mskydream/ashyq/cmd/model"
 	"github.com/skip2/go-qrcode"
 )
 
 func (r *Repository) Create(userId int, realEstate *model.RealEstate) (id int, err error) {
 	tx, err := r.db.Conn.Begin()
+	if err != nil {
+		return 0, err
+	}
+
+	// unix time for qr code
+	qrCode := time.Now().Unix()
+	// time to string
+	qrCodeStr := strconv.FormatInt(qrCode, 10)
+	realEstate.QrCode = qrCodeStr
+	// create qr code
+	data := "http://localhost:8080/qr/" + realEstate.Address + ".png"
+	err = WriteQRCodeToFile("./cmd/qr/"+qrCodeStr+".png", data)
 	if err != nil {
 		return 0, err
 	}
@@ -39,7 +54,7 @@ func (r *Repository) GetAll(userId int) (realEstates []model.RealEstate, err err
 }
 
 func (r *Repository) Get(userId int, id string) (realEstate model.RealEstate, err error) {
-	err = r.db.Conn.QueryRow("SELECT id, address, qr_code, created_at FROM real_estate WHERE user_profile_id = $1 AND id = $2", userId, id).Scan(&realEstate.Id, &realEstate.Address, &realEstate.QrCode, &realEstate.CreatedAt)
+	err = r.db.Conn.QueryRow("SELECT id,user_profile_id, address, qr_code, created_at FROM real_estate WHERE user_profile_id = $1 AND id = $2", userId, id).Scan(&realEstate.Id, &realEstate.UserProfileId, &realEstate.Address, &realEstate.QrCode, &realEstate.CreatedAt)
 	if err != nil {
 		return model.RealEstate{}, err
 	}
