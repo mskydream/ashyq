@@ -24,5 +24,4 @@ func main() {
 
 	fmt.Printf("Сервер, работающий на порту:%v\n", config.Port)
 	router.Run()
-
 }

@@ -34,8 +34,8 @@ func (h *Handler) SetupRouter() *gin.Engine {
 			realEstate.GET("/", h.getAllRealEstates)
 			realEstate.GET("/:id", h.getRealEstate)
 			realEstate.POST("/", h.createRealEstate)
-			// realEstate.PUT("/:id", h.updateRealEstate)
-			// realEstate.DELETE("/:id", h.deleteRealEstate)
+			realEstate.PUT("/:id", h.updateRealEstate)
+			realEstate.DELETE("/:id", h.deleteRealEstate)
 			realEstate.StaticFS("/qr-code", http.Dir("./cmd/qr"))
 		}
 

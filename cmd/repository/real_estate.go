@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"os"
 	"strconv"
 	"time"
 
@@ -14,14 +15,10 @@ func (r *Repository) Create(userId int, realEstate *model.RealEstate) (id int, e
 		return 0, err
 	}
 
-	// unix time for qr code
-	qrCode := time.Now().Unix()
-	// time to string
-	qrCodeStr := strconv.FormatInt(qrCode, 10)
-	realEstate.QrCode = qrCodeStr
+	realEstate.QrCode = UnixTimeForQr()
 	// create qr code
 	data := "http://localhost:8080/qr/" + realEstate.Address + ".png"
-	err = WriteQRCodeToFile("./cmd/qr/"+qrCodeStr+".png", data)
+	err = WriteQRCodeToFile("./cmd/qr/"+realEstate.QrCode+".png", data)
 	if err != nil {
 		return 0, err
 	}
@@ -61,10 +58,73 @@ func (r *Repository) Get(userId int, id string) (realEstate model.RealEstate, er
 	return realEstate, nil
 }
 
-func WriteQRCodeToFile(pathFileName, data string) error {
-	return qrcode.WriteFile(data, qrcode.Medium, 256, pathFileName)
+func (r *Repository) Delete(userId int, id string) error {
+	var qrCode string
+	err := r.db.Conn.QueryRow("SELECT qr_code FROM real_estate WHERE id = $1", id).Scan(&qrCode)
+	if err != nil {
+		return err
+	}
+
+	err = DeleteQRCode("./cmd/qr/" + qrCode + ".png")
+	if err != nil {
+		return err
+	}
+
+	_, err = r.db.Conn.Exec("DELETE FROM real_estate WHERE id = $1 and user_profile_id = $2", id, userId)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *Repository) Update(userId int, id string, realEstate *model.RealEstate) error {
+	tx, err := r.db.Conn.Begin()
+	if err != nil {
+		return err
+	}
+
+	// unix time for qr code
+	realEstate.QrCode = UnixTimeForQr()
+
+	data := "http://localhost:8080/qr/" + realEstate.Address + ".png"
+	err = WriteQRCodeToFile("./cmd/qr/"+realEstate.QrCode+".png", data)
+	if err != nil {
+		return err
+	}
+
+	// get qr_code from db
+	var qrCode string
+	err = tx.QueryRow("SELECT qr_code FROM real_estate WHERE id = $1", id).Scan(&qrCode)
+	if err != nil {
+		return err
+	}
+
+	err = DeleteQRCode("./cmd/qr/" + qrCode + ".png")
+	if err != nil {
+		return err
+	}
+
+	_, err = tx.Exec("UPDATE real_estate SET address = $1, qr_code = $2 WHERE id = $3 AND user_profile_id = $4", realEstate.Address, realEstate.QrCode, id, userId)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	return tx.Commit()
 }
 
 func (r *Repository) CheckAddress(address string) error {
 	return r.db.Conn.Select("SELECT * FROM real_estate WHERE address = $1", address)
+}
+
+func DeleteQRCode(pathFileName string) error {
+	return os.Remove(pathFileName)
+}
+
+func UnixTimeForQr() string {
+	return strconv.FormatInt(time.Now().Unix(), 10)
+}
+
+func WriteQRCodeToFile(pathFileName, data string) error {
+	return qrcode.WriteFile(data, qrcode.Medium, 256, pathFileName)
 }

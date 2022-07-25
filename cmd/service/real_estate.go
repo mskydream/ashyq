@@ -17,3 +17,11 @@ func (s *Service) Get(userId int, id string) (model.RealEstate, error) {
 func (s *Service) CheckAddress(address string) error {
 	return s.repo.CheckAddress(address)
 }
+
+func (s *Service) Delete(userId int, id string) error {
+	return s.repo.Delete(userId, id)
+}
+
+func (s *Service) Update(userId int, id string, realEstate *model.RealEstate) error {
+	return s.repo.Update(userId, id, realEstate)
+}

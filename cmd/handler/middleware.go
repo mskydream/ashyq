@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mskydream/ashyq/cmd/model"
 )
 
 const (
@@ -22,21 +23,18 @@ func (h *Handler) userIdentity(c *gin.Context) {
 
 	headerParts := strings.Split(header, " ")
 	if len(headerParts) != 2 || headerParts[0] != "Bearer" {
-		c.AbortWithStatus(http.StatusUnauthorized)
-		//newErrorResponse(c, http.StatusUnauthorized, "invalid auth header")
+		c.AbortWithStatusJSON(http.StatusUnauthorized, model.Response{IsSuccess: false, Message: "Необходима авторизация", Data: ""})
 		return
 	}
 
 	if len(headerParts[1]) == 0 {
-		// newErrorResponse(c, http.StatusUnauthorized, "token is empty")
-		c.AbortWithStatus(http.StatusUnauthorized)
+		c.AbortWithStatusJSON(http.StatusUnauthorized, model.Response{IsSuccess: false, Message: "Необходима авторизация", Data: ""})
 		return
 	}
 
 	userId, err := h.service.ParseToken(headerParts[1])
 	if err != nil {
-		// newErrorResponse(c, http.StatusUnauthorized, err.Error())
-		c.AbortWithStatus(http.StatusUnauthorized)
+		c.AbortWithStatusJSON(http.StatusUnauthorized, model.Response{IsSuccess: false, Message: "Необходима авторизация", Data: ""})
 		return
 	}
 

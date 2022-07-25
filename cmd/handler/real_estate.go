@@ -66,3 +66,43 @@ func (h *Handler) getRealEstate(c *gin.Context) {
 
 	c.JSON(http.StatusOK, realEstate)
 }
+
+func (h *Handler) deleteRealEstate(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, model.Response{IsSuccess: false, Message: "Необходима авторизация", Data: err})
+		return
+	}
+
+	id := c.Param("id")
+	err = h.service.Delete(userId, id)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, model.Response{IsSuccess: false, Message: "Ошибка в сервере", Data: err})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"id": id})
+}
+
+func (h *Handler) updateRealEstate(c *gin.Context) {
+	userId, err := getUserId(c)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, model.Response{IsSuccess: false, Message: "Необходима авторизация", Data: err})
+		return
+	}
+
+	id := c.Param("id")
+	var realEstate model.RealEstate
+	if err := c.ShouldBindJSON(&realEstate); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, model.Response{IsSuccess: false, Message: "Введенные данные некорректны", Data: err})
+		return
+	}
+
+	err = h.service.Update(userId, id, &realEstate)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, model.Response{IsSuccess: false, Message: "Ошибка в сервере", Data: err})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"id": id})
+}
