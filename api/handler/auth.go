@@ -38,5 +38,4 @@ func (h *Handler) signIn(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, model.Response{IsSuccess: true, Message: "Вход выполнено", Data: token})
-
 }

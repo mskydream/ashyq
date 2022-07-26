@@ -23,7 +23,7 @@ func (d *DB) InitDatabase(c *config.DB) *DB {
 		panic(err)
 	}
 
-	m, err := migrate.New("file://cmd/migrations", source)
+	m, err := migrate.New("file://api/migrations", source)
 	if err != nil {
 		panic(err)
 	}
