@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mskydream/ashyq/cmd/service"
+	"github.com/mskydream/ashyq/api/service"
 )
 
 type Handler struct {
@@ -20,7 +20,6 @@ func NewHandler(service *service.Service) *Handler {
 func (h *Handler) SetupRouter() *gin.Engine {
 	router := gin.Default()
 
-	// router.StaticFS("/qr-code", http.Dir("./cmd/qr"))
 	auth := router.Group("/auth")
 	{
 		auth.POST("/sign-up", h.signUp)
@@ -47,6 +46,21 @@ func (h *Handler) SetupRouter() *gin.Engine {
 		}
 
 	}
+
+	// admin := router.Group("/admin")
+	// {
+	// 	admin.POST("sign-in", h.adminSignIn)
+	// }
+
+	// main := router.Group("/main", h.adminIdentity)
+	// {
+	// 	main.GET("/", h.getAllRealEstates)
+	// }
+
+	// amdin.GET("/:id", h.getUser)
+	// amdin.POST("/", h.createUser)
+	// amdin.PUT("/:id", h.updateUser)
+	// amdin.DELETE("/:id", h.deleteUser)
 
 	return router
 }

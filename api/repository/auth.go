@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/mskydream/ashyq/cmd/model"
+import "github.com/mskydream/ashyq/api/model"
 
 func (r *Repository) CreateUser(user *model.User) (id int, err error) {
 	query := `INSERT INTO user_profile(name,surname, born, status,phone_number, iin,gender,residential_address,password,created_at)

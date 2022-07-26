@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/mskydream/ashyq/cmd/model"
+	"github.com/mskydream/ashyq/api/model"
 )
 
 func (r *Repository) CreateVisit(userId int, visit *model.Visit) (int, error) {
