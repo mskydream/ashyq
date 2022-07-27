@@ -14,13 +14,13 @@ func (h *Handler) createVisit(c *gin.Context) {
 		return
 	}
 
-	var input model.Visit
-	if err := c.ShouldBindJSON(&input); err != nil {
+	var inputQr model.Qr
+	if err := c.ShouldBindJSON(&inputQr); err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, model.Response{IsSuccess: false, Message: "Введенные данные некорректны", Data: err})
 		return
 	}
 
-	id, err := h.service.CreateVisit(userId, &input)
+	id, err := h.service.CreateVisit(userId, &inputQr)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, model.Response{IsSuccess: false, Message: "Ошибка в сервере в созданий посещения", Data: err})
 		return

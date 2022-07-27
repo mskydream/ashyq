@@ -14,13 +14,13 @@ func (h *Handler) signUp(c *gin.Context) {
 		return
 	}
 
-	id, err := h.service.CreateUser(&input)
+	status, err := h.service.CreateUser(&input)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, model.Response{IsSuccess: false, Message: "Ошибка в сервере", Data: err})
 		return
 	}
 
-	c.JSON(http.StatusOK, model.Response{IsSuccess: true, Message: "Успешно создано", Data: id})
+	c.JSON(http.StatusOK, model.Response{IsSuccess: true, Message: "Успешно создано", Data: status})
 }
 
 func (h *Handler) signIn(c *gin.Context) {

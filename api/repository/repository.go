@@ -20,7 +20,8 @@ type RealEstate interface {
 }
 
 type Visit interface {
-	CreateVisit(userId int, visit *model.Visit) (int, error)
+	CreateVisit(userId int, qr *model.Qr) (string, error)
+	CheckAddress(address string) (int, error)
 	GetVisits(userId int) ([]model.Visit, error)
 	GetVisit(userId int, id string) (model.Visit, error)
 }

@@ -11,6 +11,7 @@ func (r *Repository) CreateUser(user *model.User) (id int, err error) {
 	if !checkIIN(user.IIN) || !checkPhoneNumber(user.PhoneNumber) {
 		return 0, errors.New("invalid iin or phone number")
 	}
+
 	query := `INSERT INTO user_profile(name,surname, born, status,phone_number, iin,gender,residential_address,password,created_at)
 								values($1, $2, $3, $4, $5, $6, $7, $8, $9, now()) RETURNING id`
 	row := r.db.Conn.QueryRow(query, user.Name, user.Surname, user.BornDate, user.Status, user.PhoneNumber, user.IIN, user.Gender, user.ResidentialAddress, user.Password)
@@ -22,13 +23,9 @@ func (r *Repository) CreateUser(user *model.User) (id int, err error) {
 }
 
 func (r *Repository) GetUser(iin, password string) (user model.User, err error) {
-	err = r.db.Conn.Get(&user, "SELECT id FROM user_profile WHERE iin=$1 AND password=$2", iin, password)
-	return
+	return user, r.db.Conn.Get(&user, "SELECT id FROM user_profile WHERE iin=$1 AND password=$2", iin, password)
 }
 
-// 001129500582
-
-// check if iin is valid
 func checkIIN(iin string) bool {
 	if len(iin) == 12 {
 		for i := 0; i < len(iin); i++ {
@@ -42,8 +39,6 @@ func checkIIN(iin string) bool {
 	return false
 }
 
-// check phone number
-// example 8 777 777 77 77
 func checkPhoneNumber(number string) bool {
 	if len(number) == 11 {
 		if string(number[0]) == "8" && string(number[1]) == "7" {

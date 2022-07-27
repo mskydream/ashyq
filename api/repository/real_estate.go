@@ -17,7 +17,7 @@ func (r *Repository) Create(userId int, realEstate *model.RealEstate) (id int, e
 
 	realEstate.QrCode = UnixTimeForQr()
 	// create qr code
-	data := "http://localhost:8080/qr/" + realEstate.Address + ".png"
+	data := "http://localhost:8080/api/real-estate/qr-code" + realEstate.QrCode
 	err = WriteQRCodeToFile("./cmd/qr/"+realEstate.QrCode+".png", data)
 	if err != nil {
 		return 0, err
@@ -86,7 +86,7 @@ func (r *Repository) Update(userId int, id string, realEstate *model.RealEstate)
 	// unix time for qr code
 	realEstate.QrCode = UnixTimeForQr()
 
-	data := "http://localhost:8080/qr/" + realEstate.Address + ".png"
+	data := "http://localhost:8080/api/real-estate/qr-code" + realEstate.QrCode
 	err = WriteQRCodeToFile("./cmd/qr/"+realEstate.QrCode+".png", data)
 	if err != nil {
 		return err
