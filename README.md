@@ -12,3 +12,4 @@
 - Работа с БД, используя библиотеку <a href="https://github.com/jmoiron/sqlx">sqlx</a>.
 - Регистрация и аутентификация. Работа с JWT. Middleware.
 - Написание SQL запросов.
+- Для создания qr используется библиотека <a href="https://github.com/skip2/go-qrcode">go-qrcode</a>
