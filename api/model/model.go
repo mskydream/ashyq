@@ -45,3 +45,7 @@ type SignInInput struct {
 type GenerateTokenResponse struct {
 	Token string `json:"token"`
 }
+
+type Status struct {
+	Status string `json:"status"`
+}
