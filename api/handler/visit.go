@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +15,6 @@ func (h *Handler) getVisitByQrCode(c *gin.Context) {
 	}
 
 	qrId := c.Param("id")
-	fmt.Println(qrId)
 	status, err := h.service.GetStatus(userId, qrId)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, model.Response{IsSuccess: false, Message: "Ошибка в сервере", Data: err})

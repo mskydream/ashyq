@@ -45,7 +45,3 @@ type SignInInput struct {
 type GenerateTokenResponse struct {
 	Token string `json:"token"`
 }
-
-type Qr struct {
-	Qr string `json:"qr"`
-}

@@ -15,10 +15,7 @@ func (r *Repository) Create(userId int, realEstate *model.RealEstate) (id int, e
 		return 0, err
 	}
 
-	realEstate.QrCode = UnixTimeForQr()
-	// create qr code
-	data := "http://localhost:8080/api/real-estate/visit/" + realEstate.QrCode
-	err = WriteQRCodeToFile("./api/qr/"+realEstate.QrCode+".png", data)
+	realEstate.QrCode, err = createQrCode()
 	if err != nil {
 		return 0, err
 	}
@@ -65,7 +62,7 @@ func (r *Repository) Delete(userId int, id string) error {
 		return err
 	}
 
-	err = DeleteQRCode("./api/qr/" + qrCode + ".png")
+	err = deleteQRCode("./api/qr/" + qrCode + ".png")
 	if err != nil {
 		return err
 	}
@@ -83,23 +80,18 @@ func (r *Repository) Update(userId int, id string, realEstate *model.RealEstate)
 		return err
 	}
 
-	// unix time for qr code
-	realEstate.QrCode = UnixTimeForQr()
-
-	data := "http://localhost:8080/api/real-estate/visit" + realEstate.QrCode
-	err = WriteQRCodeToFile("./api/qr/"+realEstate.QrCode+".png", data)
+	realEstate.QrCode, err = createQrCode()
 	if err != nil {
 		return err
 	}
 
-	// get qr_code from db
 	var qrCode string
 	err = tx.QueryRow("SELECT qr_code FROM real_estate WHERE id = $1", id).Scan(&qrCode)
 	if err != nil {
 		return err
 	}
 
-	err = DeleteQRCode("./api/qr/" + qrCode + ".png")
+	err = deleteQRCode("./api/qr/" + qrCode + ".png")
 	if err != nil {
 		return err
 	}
@@ -117,14 +109,21 @@ func (r *Repository) CheckAddress(address string) error {
 	return r.db.Conn.Select("SELECT * FROM real_estate WHERE address = $1", address)
 }
 
-func DeleteQRCode(pathFileName string) error {
+func deleteQRCode(pathFileName string) error {
 	return os.Remove(pathFileName)
 }
 
-func UnixTimeForQr() string {
-	return strconv.FormatInt(time.Now().Unix(), 10)
+func createQrCode() (string, error) {
+	qrCode := strconv.FormatInt(time.Now().Unix(), 10)
+	data := "http://localhost:8080/api/real-estate/visit/qr_code/" + qrCode
+
+	err := writeQRCodeToFile("./api/qr/"+qrCode+".png", data)
+	if err != nil {
+		return "", err
+	}
+	return qrCode, nil
 }
 
-func WriteQRCodeToFile(pathFileName, data string) error {
+func writeQRCodeToFile(pathFileName, data string) error {
 	return qrcode.WriteFile(data, qrcode.Medium, 256, pathFileName)
 }
