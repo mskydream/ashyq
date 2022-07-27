@@ -35,14 +35,14 @@ func (h *Handler) SetupRouter() *gin.Engine {
 			realEstate.POST("/", h.createRealEstate)
 			realEstate.PUT("/:id", h.updateRealEstate)
 			realEstate.DELETE("/:id", h.deleteRealEstate)
-			realEstate.StaticFS("/qr-code", http.Dir("./cmd/qr"))
+			realEstate.StaticFS("/qr_code", http.Dir("./cmd/qr"))
 		}
 
 		visit := api.Group("/visit")
 		{
-			visit.POST("/", h.createVisit)
 			visit.GET("/:id", h.getVisit)
 			visit.GET("/", h.getAllVisits)
+			visit.Group("/qr_code").GET("/:id", h.getVisitByQrCode)
 		}
 
 	}

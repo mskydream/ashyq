@@ -17,8 +17,8 @@ func (r *Repository) Create(userId int, realEstate *model.RealEstate) (id int, e
 
 	realEstate.QrCode = UnixTimeForQr()
 	// create qr code
-	data := "http://localhost:8080/api/real-estate/qr-code" + realEstate.QrCode
-	err = WriteQRCodeToFile("./cmd/qr/"+realEstate.QrCode+".png", data)
+	data := "http://localhost:8080/api/real-estate/visit/" + realEstate.QrCode
+	err = WriteQRCodeToFile("./api/qr/"+realEstate.QrCode+".png", data)
 	if err != nil {
 		return 0, err
 	}
@@ -65,7 +65,7 @@ func (r *Repository) Delete(userId int, id string) error {
 		return err
 	}
 
-	err = DeleteQRCode("./cmd/qr/" + qrCode + ".png")
+	err = DeleteQRCode("./api/qr/" + qrCode + ".png")
 	if err != nil {
 		return err
 	}
@@ -86,8 +86,8 @@ func (r *Repository) Update(userId int, id string, realEstate *model.RealEstate)
 	// unix time for qr code
 	realEstate.QrCode = UnixTimeForQr()
 
-	data := "http://localhost:8080/api/real-estate/qr-code" + realEstate.QrCode
-	err = WriteQRCodeToFile("./cmd/qr/"+realEstate.QrCode+".png", data)
+	data := "http://localhost:8080/api/real-estate/visit" + realEstate.QrCode
+	err = WriteQRCodeToFile("./api/qr/"+realEstate.QrCode+".png", data)
 	if err != nil {
 		return err
 	}
@@ -99,7 +99,7 @@ func (r *Repository) Update(userId int, id string, realEstate *model.RealEstate)
 		return err
 	}
 
-	err = DeleteQRCode("./cmd/qr/" + qrCode + ".png")
+	err = DeleteQRCode("./api/qr/" + qrCode + ".png")
 	if err != nil {
 		return err
 	}
