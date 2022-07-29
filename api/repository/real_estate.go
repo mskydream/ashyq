@@ -115,7 +115,7 @@ func deleteQRCode(pathFileName string) error {
 
 func createQrCode() (string, error) {
 	qrCode := strconv.FormatInt(time.Now().Unix(), 10)
-	data := "http://localhost:8080/api/real-estate/visit/qr_code/" + qrCode
+	data := "http://localhost:8080/api/visit/qr_code/" + qrCode
 
 	err := writeQRCodeToFile("./api/qr/"+qrCode+".png", data)
 	if err != nil {

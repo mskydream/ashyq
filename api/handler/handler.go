@@ -30,9 +30,9 @@ func (h *Handler) SetupRouter() *gin.Engine {
 	{
 		realEstate := api.Group("/real-estate")
 		{
-			realEstate.GET("/", h.getAllRealEstates)
+			realEstate.GET("", h.getAllRealEstates)
 			realEstate.GET("/:id", h.getRealEstate)
-			realEstate.POST("/", h.createRealEstate)
+			realEstate.POST("", h.createRealEstate)
 			realEstate.PUT("/:id", h.updateRealEstate)
 			realEstate.DELETE("/:id", h.deleteRealEstate)
 			realEstate.StaticFS("/qr_code", http.Dir("./cmd/qr"))
@@ -41,7 +41,7 @@ func (h *Handler) SetupRouter() *gin.Engine {
 		visit := api.Group("/visit")
 		{
 			visit.GET("/:id", h.getVisit)
-			visit.GET("/", h.getAllVisits)
+			visit.GET("", h.getAllVisits)
 			visit.Group("/qr_code").GET("/:id", h.getVisitByQrCode)
 		}
 
