@@ -1,0 +1,126 @@
+definitions:
+  model.Response:
+    properties:
+      data: {}
+      isSuccess:
+        type: boolean
+      message:
+        type: string
+    type: object
+  model.SignInInput:
+    properties:
+      iin:
+        type: string
+      password:
+        type: string
+    required:
+    - iin
+    - password
+    type: object
+  model.User:
+    properties:
+      born_date:
+        type: string
+      created_at:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      iin:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+      residential_address:
+        type: string
+      status:
+        type: string
+      surname:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/sign-in:
+    post:
+      consumes:
+      - application/json
+      description: login
+      operationId: login
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.SignInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: SignIn
+      tags:
+      - auth
+  /auth/sign-up:
+    post:
+      consumes:
+      - application/json
+      description: create account
+      operationId: create-account
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: SignUp
+      tags:
+      - auth
+swagger: "2.0"

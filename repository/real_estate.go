@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mskydream/ashyq/api/model"
+	"github.com/mskydream/ashyq/model"
 	"github.com/skip2/go-qrcode"
 )
 

@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/mskydream/ashyq/api/model"
+	"github.com/mskydream/ashyq/model"
 )
 
 func (r *Repository) GetStatus(userId int, qrId string) (model.Status, error) {

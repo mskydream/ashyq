@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/mskydream/ashyq/api/config"
-	"github.com/mskydream/ashyq/api/db"
-	"github.com/mskydream/ashyq/api/handler"
-	"github.com/mskydream/ashyq/api/repository"
-	"github.com/mskydream/ashyq/api/service"
+	"github.com/mskydream/ashyq/config"
+	"github.com/mskydream/ashyq/db"
+	"github.com/mskydream/ashyq/handler"
+	"github.com/mskydream/ashyq/repository"
+	"github.com/mskydream/ashyq/service"
 )
 
 func main() {
@@ -23,5 +23,5 @@ func main() {
 	router := handlers.SetupRouter()
 
 	fmt.Printf("Сервер, работающий на порту:%v\n", config.Port)
-	router.Run()
+	router.Run(config.Port)
 }

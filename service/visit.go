@@ -1,6 +1,6 @@
 package service
 
-import "github.com/mskydream/ashyq/api/model"
+import "github.com/mskydream/ashyq/model"
 
 func (s *Service) GetStatus(userId int, qrId string) (model.Status, error) {
 	return s.repo.GetStatus(userId, qrId)

@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mskydream/ashyq/api/model"
+	"github.com/mskydream/ashyq/model"
 )
 
 const (

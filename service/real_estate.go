@@ -1,6 +1,6 @@
 package service
 
-import "github.com/mskydream/ashyq/api/model"
+import "github.com/mskydream/ashyq/model"
 
 func (s *Service) Create(userId int, realEstate *model.RealEstate) (int, error) {
 	return s.repo.Create(userId, realEstate)

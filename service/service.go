@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/mskydream/ashyq/api/model"
-	"github.com/mskydream/ashyq/api/repository"
+	"github.com/mskydream/ashyq/model"
+	"github.com/mskydream/ashyq/repository"
 )
 
 type Authorization interface {

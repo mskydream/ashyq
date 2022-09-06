@@ -4,7 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mskydream/ashyq/api/service"
+	"github.com/mskydream/ashyq/docs"
+	"github.com/mskydream/ashyq/service"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Handler struct {
@@ -19,6 +22,9 @@ func NewHandler(service *service.Service) *Handler {
 
 func (h *Handler) SetupRouter() *gin.Engine {
 	router := gin.Default()
+	docs.SwaggerInfo.BasePath = "/api"
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	auth := router.Group("/auth")
 	{

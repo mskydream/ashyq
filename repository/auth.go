@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/mskydream/ashyq/api/model"
+	"github.com/mskydream/ashyq/model"
 )
 
 func (r *Repository) CreateUser(user *model.User) (id int, err error) {

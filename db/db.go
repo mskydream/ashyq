@@ -8,7 +8,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/jmoiron/sqlx"
-	"github.com/mskydream/ashyq/api/config"
+	"github.com/mskydream/ashyq/config"
 )
 
 type DB struct {
@@ -23,7 +23,7 @@ func (d *DB) InitDatabase(c *config.DB) *DB {
 		panic(err)
 	}
 
-	m, err := migrate.New("file://api/migrations", source)
+	m, err := migrate.New("file://migrations", source)
 	if err != nil {
 		panic(err)
 	}
