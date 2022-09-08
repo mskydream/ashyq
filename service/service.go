@@ -26,11 +26,15 @@ type Visit interface {
 }
 
 type Service struct {
-	repo *repository.Repository
+	Authorization
+	RealEstate
+	Visit
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
-		repo: repos,
+		Authorization: NewAuthService(repos.Authorization),
+		RealEstate:    NewRealEstateService(repos.RealEstate),
+		Visit:         NewVisitService(repos.Visit),
 	}
 }

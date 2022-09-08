@@ -4,17 +4,26 @@ import (
 	"errors"
 	"strconv"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/mskydream/ashyq/model"
 )
 
-func (r *Repository) CreateUser(user *model.User) (id int, err error) {
+type AuthPostgres struct {
+	db *sqlx.DB
+}
+
+func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
+	return &AuthPostgres{db: db}
+}
+
+func (r *AuthPostgres) CreateUser(user *model.User) (id int, err error) {
 	if !checkIIN(user.IIN) || !checkPhoneNumber(user.PhoneNumber) {
 		return 0, errors.New("invalid iin or phone number")
 	}
 
 	query := `INSERT INTO user_profile(name,surname, born, status,phone_number, iin,gender,residential_address,password,created_at)
 								values($1, $2, $3, $4, $5, $6, $7, $8, $9, now()) RETURNING id`
-	row := r.db.Conn.QueryRow(query, user.Name, user.Surname, user.BornDate, user.Status, user.PhoneNumber, user.IIN, user.Gender, user.ResidentialAddress, user.Password)
+	row := r.db.QueryRow(query, user.Name, user.Surname, user.BornDate, user.Status, user.PhoneNumber, user.IIN, user.Gender, user.ResidentialAddress, user.Password)
 
 	if err = row.Scan(&id); err != nil {
 		return
@@ -22,8 +31,8 @@ func (r *Repository) CreateUser(user *model.User) (id int, err error) {
 	return
 }
 
-func (r *Repository) GetUser(iin, password string) (user model.User, err error) {
-	return user, r.db.Conn.Get(&user, "SELECT id FROM user_profile WHERE iin=$1 AND password=$2", iin, password)
+func (r *AuthPostgres) GetUser(iin, password string) (user model.User, err error) {
+	return user, r.db.Get(&user, "SELECT id FROM user_profile WHERE iin=$1 AND password=$2", iin, password)
 }
 
 func checkIIN(iin string) bool {

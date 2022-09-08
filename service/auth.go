@@ -8,6 +8,7 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/mskydream/ashyq/model"
+	"github.com/mskydream/ashyq/repository"
 )
 
 const (
@@ -21,12 +22,20 @@ type tokenClaims struct {
 	UserId int `json:"user_id"`
 }
 
-func (s *Service) CreateUser(user *model.User) (int, error) {
+type AuthService struct {
+	repo repository.Authorization
+}
+
+func NewAuthService(repo repository.Authorization) *AuthService {
+	return &AuthService{repo: repo}
+}
+
+func (s *AuthService) CreateUser(user *model.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }
 
-func (s *Service) GenerateToken(iin, password string) (response model.GenerateTokenResponse, err error) {
+func (s *AuthService) GenerateToken(iin, password string) (response model.GenerateTokenResponse, err error) {
 	user, err := s.repo.GetUser(iin, generatePasswordHash(password))
 	if err != nil {
 		return
@@ -45,7 +54,7 @@ func (s *Service) GenerateToken(iin, password string) (response model.GenerateTo
 	return
 }
 
-func (s *Service) ParseToken(accessToken string) (int, error) {
+func (s *AuthService) ParseToken(accessToken string) (int, error) {
 	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid signing method")

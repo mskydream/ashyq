@@ -26,11 +26,15 @@ type Visit interface {
 }
 
 type Repository struct {
-	db *db.DB
+	Authorization
+	RealEstate
+	Visit
 }
 
 func NewRepository(db *db.DB) *Repository {
 	return &Repository{
-		db: db,
+		Authorization: NewAuthPostgres(db.Conn),
+		RealEstate:    NewRealEstatePostgres(db.Conn),
+		Visit:         NewVisitPostgres(db.Conn),
 	}
 }

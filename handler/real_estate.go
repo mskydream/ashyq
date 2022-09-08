@@ -20,7 +20,7 @@ func (h *Handler) createRealEstate(c *gin.Context) {
 		return
 	}
 
-	if err := h.service.CheckAddress(realEstate.Address); err == nil {
+	if err := h.service.CheckAddress(&realEstate.Address); err == nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, model.Response{IsSuccess: false, Message: "Адрес уже добавлен", Data: ""})
 		return
 	}
