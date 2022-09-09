@@ -36,7 +36,7 @@ func (h *Handler) SetupRouter() *gin.Engine {
 	{
 		realEstate := api.Group("/real-estate")
 		{
-			realEstate.GET("", h.getAllRealEstates)
+			realEstate.GET("/", h.getAllRealEstates)
 			realEstate.GET("/:id", h.getRealEstate)
 			realEstate.POST("", h.createRealEstate)
 			realEstate.PUT("/:id", h.updateRealEstate)

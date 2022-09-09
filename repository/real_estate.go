@@ -39,7 +39,7 @@ func (r *RealEstatePostgres) Create(userId int, realEstate *model.RealEstate) (i
 }
 
 func (r *RealEstatePostgres) GetAll(userId int) (realEstates []model.RealEstate, err error) {
-	rows, err := r.db.Query("SELECT id, address, qr_code, created_at FROM real_estate WHERE user_profile_id = $1", userId)
+	rows, err := r.db.Query("SELECT id,user_profile_id, address, qr_code, created_at FROM real_estate WHERE user_profile_id = $1", userId)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (r *RealEstatePostgres) GetAll(userId int) (realEstates []model.RealEstate,
 
 	for rows.Next() {
 		var realEstate model.RealEstate
-		err = rows.Scan(&realEstate.Id, &realEstate.Address, &realEstate.QrCode, &realEstate.CreatedAt)
+		err = rows.Scan(&realEstate.Id, &realEstate.UserProfileId, &realEstate.Address, &realEstate.QrCode, &realEstate.CreatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -70,16 +70,16 @@ func (r *RealEstatePostgres) Delete(userId int, id string) error {
 	if err != nil {
 		return err
 	}
+	_, err = r.db.Exec("DELETE FROM real_estate WHERE id = $1 and user_profile_id = $2", id, userId)
+	if err != nil {
+		return err
+	}
 
 	err = deleteQRCode("./qr/" + qrCode + ".png")
 	if err != nil {
 		return err
 	}
 
-	_, err = r.db.Exec("DELETE FROM real_estate WHERE id = $1 and user_profile_id = $2", id, userId)
-	if err != nil {
-		return err
-	}
 	return nil
 }
 
